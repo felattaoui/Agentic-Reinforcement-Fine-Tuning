@@ -91,6 +91,18 @@ Agentic-Reinforcement-Fine-Tuning/
     └── article_2.md              # Multi-Agent Orchestration
 ```
 
+## Notebooks
+
+| Notebook | Description | Dependencies |
+|----------|-------------|--------------|
+| `00_optional_RFT_graders_tutorial` | Tutorial on RFT graders (string_check, text_similarity, python, model) using Responses API | Self-contained |
+| `01_data_preparation` | Load tau-bench data, enrich with gpt-5.2, split train/val/test | `src/settings`, `src/data_utils` |
+| `02_training` | Launch RFT fine-tuning job on Azure OpenAI | `src/settings`, `src/azure_client`, `src/training/` |
+| `03_deployment` | Deploy fine-tuned model to Azure endpoint | `src/settings`, `src/evaluation/deployment` |
+| `04_planner_evaluation` | Compare 3 planner configs (baseline, gpt-5.2, fine-tuned) with F2 metrics | `src/settings`, `src/evaluation/` |
+| `05_multiagent_with_tool_calling` | Full workflow with ExecutorAgent, ReAct pattern, tau-bench database | `src/multiagent/`, `src/evaluation/` |
+| `06_debug_tca_analysis` | Tool Call Accuracy debugging and analysis | `src/multiagent/`, `src/evaluation/` |
+
 ## Technologies
 
 | Technology | Purpose |
