@@ -21,6 +21,3 @@ requests>=2.31.0
 
 # Azure AI Evaluation
 azure-ai-evaluation>=1.0.0
-
-# tau-bench (Windows: set PYTHONUTF8=1 before pip install)
-git+https://github.com/sierra-research/tau-bench.git
