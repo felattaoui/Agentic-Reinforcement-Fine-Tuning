@@ -1,0 +1,26 @@
+# Azure OpenAI
+openai>=1.40.0
+azure-identity>=1.15.0
+azure-mgmt-cognitiveservices
+
+# Agent Framework (core only - avoids Rust compilation)
+agent-framework-core
+
+# Data & ML
+pandas>=2.0.0
+numpy>=1.24.0
+tqdm>=4.65.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Utilities
+python-dotenv>=1.0.0
+requests>=2.31.0
+
+# Azure AI Evaluation
+azure-ai-evaluation>=1.0.0
+
+# tau-bench (Windows: set PYTHONUTF8=1 before pip install)
+git+https://github.com/sierra-research/tau-bench.git
