@@ -276,9 +276,22 @@ We conducted two levels of evaluation: the planner component in isolation, and t
 
 ### Planner Evaluation
 
-First, we evaluated the planner's ability to predict correct tool sequences, comparing baseline o4-mini against the fine-tuned model on held-out examples.
+First, we evaluated the planner's ability to predict correct tool sequences, comparing o4-mini (vanilla), gpt-5.2 at various reasoning levels, and o4-mini (fine-tuned) on held-out examples.
 
-In our experiments, the fine-tuned planner showed consistent improvements across all metrics. Recall improved meaningfully—the model identifies more of the required tools. Precision remained high for both models, suggesting neither hallucinates unnecessary tools. The F2 score, which prioritizes recall while still penalizing over-prediction, showed substantial gains. This is exactly what we optimized for.
+In our experiments, the fine-tuned planner showed consistent improvements across all metrics:
+
+| Model | Recall | Precision | F2 Score |
+|-------|--------|-----------|----------|
+| o4-mini (vanilla) | 0.76 | 0.85 | 0.76 |
+| gpt-5.2 (none) | 0.90 | 0.82 | 0.87 |
+| gpt-5.2 (low) | 0.89 | 0.85 | 0.88 |
+| gpt-5.2 (medium) | 0.92 | 0.84 | 0.89 |
+| gpt-5.2 (high) | 0.92 | 0.85 | 0.89 |
+| **o4-mini (fine-tuned)** | **0.97** | **0.90** | **0.95** |
+
+*Note: All metrics are **macro-averaged**—F2 is calculated per sample, then averaged across samples. This differs from computing F2 from averaged precision and recall, which would yield slightly different results.*
+
+The fine-tuned o4-mini outperformed all configurations, including gpt-5.2 with high reasoning effort. Recall improved from 0.76 to 0.97 (+28%)—the model now identifies nearly all required tools. Precision also increased from 0.85 to 0.90, indicating the model doesn't hallucinate unnecessary tools. The F2 score jumped from 0.76 to 0.95 (+25%), exactly what we optimized for with our recall-weighted grader.
 
 ### End-to-End Multi-Agent Evaluation
 
@@ -342,17 +355,17 @@ The key insight: fine-tuned models have the same per-token inference cost as the
 Models like o4-mini and gpt-5.x with reasoning capabilities consume "reasoning tokens"—internal deliberation that doesn't appear in the output but is billed at the output rate. Our evaluation captured these separately:
 
 ```
-Model             | Input   | Output  | Reasoning | Total
-------------------|---------|---------|-----------|--------
-Baseline (o4-mini)| 14,876  | 29,908  | 28,800    | 73,584
-gpt-5.2 (none)    | 14,876  | 1,226   | 0         | 16,102
-gpt-5.2 (low)     | 14,876  | 5,919   | 4,547     | 25,342
-gpt-5.2 (medium)  | 14,876  | 10,547  | 9,148     | 34,571
-gpt-5.2 (high)    | 14,876  | 15,524  | 14,139    | 44,539
-Fine-tuned        | 14,876  | 16,675  | 15,296    | 46,847
+Model                  | Input   | Output  | Reasoning | Total
+-----------------------|---------|---------|-----------|--------
+o4-mini (vanilla)      | 14,876  | 28,562  | 27,456    | 70,894
+gpt-5.2 (none)         | 14,876  | 1,252   | 0         | 16,128
+gpt-5.2 (low)          | 14,876  | 6,047   | 4,707     | 25,630
+gpt-5.2 (medium)       | 14,876  | 9,910   | 8,560     | 33,346
+gpt-5.2 (high)         | 14,876  | 18,124  | 16,729    | 49,729
+o4-mini (fine-tuned)   | 14,876  | 26,743  | 25,408    | 67,027
 ```
 
-The baseline o4-mini uses extensive reasoning (28,800 tokens) to achieve its F2 score. The fine-tuned model uses moderate reasoning (15,296 tokens) but achieves higher F2—it has internalized the task-specific knowledge through training.
+The vanilla o4-mini uses extensive reasoning (27,456 tokens) to achieve its F2 score of 0.76. The fine-tuned model uses similar reasoning (25,408 tokens) but achieves F2=0.95—it has internalized the task-specific knowledge through training, producing better results with comparable compute.
 
 ### Break-Even Analysis
 
