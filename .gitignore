@@ -2,6 +2,7 @@
 /outputs/
 docs
 CLAUDE.md
+article/
 
 # Environment
 .conda/
