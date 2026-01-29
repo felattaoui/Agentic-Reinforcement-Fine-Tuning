@@ -8,14 +8,13 @@
 
 ```
 Agentic-Reinforcement-Fine-Tuning/
-├── notebooks/                    # Jupyter tutorials (7 notebooks)
+├── notebooks/                    # Jupyter tutorials (6 notebooks)
 │   ├── 00_optional_RFT_graders_tutorial.ipynb
 │   ├── 01_data_preparation.ipynb
 │   ├── 02_training.ipynb
 │   ├── 03_deployment.ipynb
 │   ├── 04_planner_evaluation.ipynb
-│   ├── 05_multiagent_with_tool_calling.ipynb
-│   └── 06_debug_tca_analysis.ipynb
+│   └── 05_multiagent_with_tool_calling.ipynb
 │
 ├── src/                          # Main application code
 │   ├── settings.py               # Centralized configuration
@@ -101,7 +100,6 @@ Agentic-Reinforcement-Fine-Tuning/
 | `03_deployment` | Deploy fine-tuned model to Azure endpoint | `src/settings`, `src/evaluation/deployment` |
 | `04_planner_evaluation` | Compare 3 planner configs (baseline, gpt-5.2, fine-tuned) with F2 metrics | `src/settings`, `src/evaluation/` |
 | `05_multiagent_with_tool_calling` | Full workflow with ExecutorAgent, ReAct pattern, tau-bench database | `src/multiagent/`, `src/evaluation/` |
-| `06_debug_tca_analysis` | Tool Call Accuracy debugging and analysis | `src/multiagent/`, `src/evaluation/` |
 
 ## Technologies
 
@@ -178,7 +176,7 @@ client = create_client("gpt-5.2")
 **Why Responses API over Chat Completions?**
 - Responses API is the latest OpenAI API with native reasoning support
 - Consistent with `src/evaluation/generate.py` which uses `AsyncOpenAI` with the same pattern
-- Standardized across notebooks 04 and 06
+- Standardized across notebooks 04 and 05
 
 ### Known Issue: `instruction_role` Parameter Ignored
 
@@ -308,7 +306,6 @@ EXECUTOR_DEPLOYMENT=gpt-5.2                  # ExecutorAgent model
 3. **Deployment** (`03_deployment.ipynb`): Deploy fine-tuned model to Azure
 4. **Planner Evaluation** (`04_planner_evaluation.ipynb`): Compare 3 planner configurations (Baseline, gpt-5.2, Fine-tuned)
 5. **Multi-Agent (full workflow)** (`05_multiagent_with_tool_calling.ipynb`): Complete workflow with tau-bench database and ReAct pattern
-6. **Debug TCA Analysis** (`06_debug_tca_analysis.ipynb`): Tool Call Accuracy debugging and analysis
 
 ## Running Commands
 

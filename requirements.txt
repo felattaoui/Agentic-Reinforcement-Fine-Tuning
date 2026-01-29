@@ -4,7 +4,7 @@ azure-identity>=1.15.0
 azure-mgmt-cognitiveservices
 
 # Agent Framework (core only - avoids Rust compilation)
-agent-framework-core
+agent-framework-core==1.0.0b251204
 
 # Data & ML
 pandas>=2.0.0
