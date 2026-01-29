@@ -1,0 +1,42 @@
+## Examples
+
+Here are examples of complete workflows. Notice how each ends with an ACTION tool:
+
+### Example 1: Exchange
+Customer: "You name is Lei Wilson and your zip code is 32255. You are confident, organized, creative, impatient..."
+
+1. find_user_id_by_name_zip(first_name="Lei", last_name="Wilson", zip="32255") -> lei_wilson_4541
+2. get_user_details(user_id="lei_wilson_4541") -> {"name": {"first_name": "Lei", "last_name": "Wilso
+3. get_order_details(order_id="#W3826449") -> {"order_id": "#W3826449", "user_id": "lei_wilson_4
+4. get_order_details(order_id="#W2905754") -> {"order_id": "#W2905754", "user_id": "lei_wilson_4
+5. get_order_details(order_id="#W4073673") -> {"order_id": "#W4073673", "user_id": "lei_wilson_4
+6. get_product_details(product_id="4760268021") -> {"name": "Laptop", "product_id": "4760268021", "va
+7. exchange_delivered_order_items(order_id="#W4073673", item_ids="['2216662955']", new_item_ids="['9844888101']", payment_method_id="credit_card_3677959") -> {"order_id": "#W4073673", "user_id": "lei_wilson_4 <- ACTION
+
+### Example 2: Cancel
+Customer: "You are Olivia Lopez, and you live in Texas in 76171. You just lost your tablet you just received an..."
+
+1. find_user_id_by_name_zip(first_name="Olivia", last_name="Lopez", zip="76171") -> olivia_lopez_3865
+2. get_user_details(user_id="olivia_lopez_3865") -> {"name": {"first_name": "Olivia", "last_name": "Lo
+3. get_order_details(order_id="#W9319364") -> {"order_id": "#W9319364", "user_id": "olivia_lopez
+4. get_order_details(order_id="#W9373487") -> {"order_id": "#W9373487", "user_id": "olivia_lopez
+5. get_order_details(order_id="#W2692684") -> {"order_id": "#W2692684", "user_id": "olivia_lopez
+6. get_order_details(order_id="#W5481803") -> {"order_id": "#W5481803", "user_id": "olivia_lopez
+7. get_order_details(order_id="#W7449508") -> {"order_id": "#W7449508", "user_id": "olivia_lopez
+8. cancel_pending_order(order_id="#W9373487", reason="no longer needed") -> {"order_id": "#W9373487", "user_id": "olivia_lopez <- ACTION
+9. cancel_pending_order(order_id="#W5481803", reason="no longer needed") -> {"order_id": "#W5481803", "user_id": "olivia_lopez <- ACTION
+10. return_delivered_order_items(order_id="#W7449508", item_ids="['6477915553']", payment_method_id="gift_card_7711863") -> {"order_id": "#W7449508", "user_id": "olivia_lopez <- ACTION
+
+### Example 3: Return
+Customer: "You are Yusuf Rossi in 19122. You want to know how many tshirt options are available in the online s..."
+
+1. list_all_product_types() -> [{"name": "Action Camera", "product_id": "33776183
+2. get_product_details(product_id="9523456873") -> {"name": "T-Shirt", "product_id": "9523456873", "v
+3. find_user_id_by_name_zip(first_name="Yusuf", last_name="Rossi", zip="19122") -> yusuf_rossi_9620
+4. get_user_details(user_id="yusuf_rossi_9620") -> {"name": {"first_name": "Yusuf", "last_name": "Ros
+5. get_order_details(order_id="#W6247578") -> {"order_id": "#W6247578", "user_id": "yusuf_rossi_
+6. get_order_details(order_id="#W9711842") -> {"order_id": "#W9711842", "user_id": "yusuf_rossi_
+7. get_order_details(order_id="#W4776164") -> {"order_id": "#W4776164", "user_id": "yusuf_rossi_
+8. get_order_details(order_id="#W6679257") -> {"order_id": "#W6679257", "user_id": "yusuf_rossi_
+9. get_order_details(order_id="#W2378156") -> {"order_id": "#W2378156", "user_id": "yusuf_rossi_
+10. return_delivered_order_items(order_id="#W2378156", item_ids="['4602305039', '4202497723', '9408160950']", payment_method_id="credit_card_9513926") -> {"order_id": "#W2378156", "user_id": "yusuf_rossi_ <- ACTION

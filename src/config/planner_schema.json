@@ -1,0 +1,38 @@
+{
+  "type": "json_schema",
+  "json_schema": {
+    "name": "planner_response",
+    "strict": true,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "find_user_id_by_email",
+              "find_user_id_by_name_zip",
+              "get_user_details",
+              "modify_user_address",
+              "get_order_details",
+              "cancel_pending_order",
+              "modify_pending_order_address",
+              "modify_pending_order_items",
+              "modify_pending_order_payment",
+              "get_product_details",
+              "list_all_product_types",
+              "return_delivered_order_items",
+              "exchange_delivered_order_items",
+              "transfer_to_human_agents",
+              "calculate"
+            ]
+          },
+          "description": "Ordered list of tools to execute for this customer request"
+        }
+      },
+      "required": ["tools"],
+      "additionalProperties": false
+    }
+  }
+}
