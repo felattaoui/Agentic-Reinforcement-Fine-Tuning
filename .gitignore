@@ -21,3 +21,8 @@ __pycache__/
 
 # Windows artifacts
 nul
+
+# documents
+*.pdf
+*.docx
+*.pptx
