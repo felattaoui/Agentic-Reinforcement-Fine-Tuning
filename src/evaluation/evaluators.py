@@ -169,6 +169,10 @@ class PlannerEvaluator:
         self.precision_eval = PrecisionEvaluator()
 
     def __call__(self, *, response: str, expected_tools: List[str], **kwargs) -> Dict:
+        # Exclude content-filtered samples from metrics (NaN is ignored by pandas .mean())
+        if response == "__CONTENT_FILTER_SKIPPED__":
+            return {"recall": float("nan"), "precision": float("nan"), "f2": float("nan")}
+
         recall = self.recall_eval(response=response, expected_tools=expected_tools)["recall"]
         precision = self.precision_eval(response=response, expected_tools=expected_tools)["precision"]
 

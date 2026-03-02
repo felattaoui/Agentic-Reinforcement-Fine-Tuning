@@ -9,7 +9,7 @@ import logging
 from typing import List, Dict, Optional, Tuple
 
 import requests
-from azure.identity import AzureCliCredential
+from azure.identity import DefaultAzureCredential
 
 from src.settings import SUBSCRIPTION_ID, RESOURCE_GROUP, RESOURCE_NAME
 
@@ -26,7 +26,7 @@ def get_azure_credentials() -> Tuple[dict, str]:
     Returns:
         Tuple of (headers dict, base_url string)
     """
-    credential = AzureCliCredential(process_timeout=30)
+    credential = DefaultAzureCredential()
     token = credential.get_token("https://management.azure.com/.default").token
     
     headers = {

@@ -5,31 +5,31 @@ Provides a pre-configured OpenAI client for Azure OpenAI endpoints.
 """
 
 from openai import OpenAI, AsyncOpenAI
-from src.settings import AZURE_ENDPOINT, AZURE_API_KEY, AZURE_DEPLOYMENT
+from src.settings import AZURE_ENDPOINT, AZURE_TOKEN_PROVIDER, AZURE_DEPLOYMENT
 
 
 def get_client() -> OpenAI:
     """
-    Get a synchronous OpenAI client configured for Azure.
-    
+    Get a synchronous OpenAI client configured for Azure (Entra ID auth).
+
     Returns:
         OpenAI: Configured client instance
     """
     return OpenAI(
-        api_key=AZURE_API_KEY,
+        api_key=AZURE_TOKEN_PROVIDER,
         base_url=f"{AZURE_ENDPOINT}/openai/v1/"
     )
 
 
 def get_async_client() -> AsyncOpenAI:
     """
-    Get an asynchronous OpenAI client configured for Azure.
-    
+    Get an asynchronous OpenAI client configured for Azure (Entra ID auth).
+
     Returns:
         AsyncOpenAI: Configured async client instance
     """
     return AsyncOpenAI(
-        api_key=AZURE_API_KEY,
+        api_key=AZURE_TOKEN_PROVIDER(),
         base_url=f"{AZURE_ENDPOINT}/openai/v1/"
     )
 

@@ -9,7 +9,7 @@ import re
 import warnings
 import logging
 
-from azure.identity import AzureCliCredential
+from azure.identity import DefaultAzureCredential
 from azure.mgmt.cognitiveservices import CognitiveServicesManagementClient
 
 from src.settings import AZURE_ENDPOINT, SUBSCRIPTION_ID, RESOURCE_GROUP
@@ -62,7 +62,7 @@ def create_no_jailbreak_filter(policy_name: str = RAI_POLICY_NAME) -> bool:
     
     # Create management client
     client = CognitiveServicesManagementClient(
-        credential=AzureCliCredential(),
+        credential=DefaultAzureCredential(),
         subscription_id=SUBSCRIPTION_ID,
     )
     

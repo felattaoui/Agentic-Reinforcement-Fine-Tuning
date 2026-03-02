@@ -205,3 +205,79 @@ def plot_cost_vs_performance(
     plt.show()
 
     print(f"\n📊 Saved: {output_path}")
+
+
+def plot_latency_analysis(
+    f2_scores: Dict[str, float],
+    usage_data: Dict[str, Dict[str, Any]],
+    output_path: Path,
+    figsize: tuple = (14, 5)
+) -> None:
+    """
+    Plot latency analysis: bar chart + scatter plot (F2 vs Latency).
+
+    Args:
+        f2_scores: Dict mapping model name to F2 score
+        usage_data: Dict mapping model name to usage dict with 'avg_latency_ms'
+        output_path: Path to save the figure
+        figsize: Figure size tuple
+    """
+    fig, axes = plt.subplots(1, 2, figsize=figsize)
+
+    model_names = [
+        "o4-mini (vanilla)",
+        "gpt-5.2 (none)",
+        "gpt-5.2 (low)",
+        "gpt-5.2 (medium)",
+        "gpt-5.2 (high)",
+        "o4-mini (fine-tuned)"
+    ]
+    model_names = [m for m in model_names if m in usage_data]
+    colors = MODEL_COLORS[:len(model_names)]
+
+    latencies = [usage_data[name].get("avg_latency_ms", 0) for name in model_names]
+
+    # Chart 1: Latency bar chart
+    ax1 = axes[0]
+    bars = ax1.bar(model_names, latencies, color=colors)
+    ax1.set_ylabel('Average Latency (ms)')
+    ax1.set_title('Response Latency Comparison')
+    ax1.tick_params(axis='x', rotation=45)
+
+    for bar, lat in zip(bars, latencies):
+        ax1.text(
+            bar.get_x() + bar.get_width() / 2,
+            bar.get_height() + 30,
+            f'{lat:,.0f}ms',
+            ha='center',
+            va='bottom',
+            fontsize=9
+        )
+
+    # Chart 2: F2 vs Latency scatter
+    ax2 = axes[1]
+    for i, name in enumerate(model_names):
+        f2 = f2_scores.get(name, 0)
+        lat = usage_data[name].get("avg_latency_ms", 0)
+        ax2.scatter(lat, f2, s=150, c=colors[i], label=name, edgecolors='black', linewidth=1)
+        ax2.annotate(
+            name, (lat, f2),
+            textcoords="offset points", xytext=(5, 5),
+            fontsize=8, ha='left'
+        )
+
+    ax2.set_xlabel('Average Latency (ms)')
+    ax2.set_ylabel('F2 Score')
+    ax2.set_title('Performance vs Latency Trade-off')
+    ax2.grid(True, alpha=0.3)
+
+    if "o4-mini (fine-tuned)" in f2_scores and "o4-mini (fine-tuned)" in usage_data:
+        ax2.axhline(y=f2_scores["o4-mini (fine-tuned)"], color='green', linestyle='--', alpha=0.5)
+        ax2.axvline(x=usage_data["o4-mini (fine-tuned)"].get("avg_latency_ms", 0),
+                    color='green', linestyle='--', alpha=0.5)
+
+    plt.tight_layout()
+    plt.savefig(output_path, dpi=150)
+    plt.show()
+
+    print(f"\n📊 Saved: {output_path}")

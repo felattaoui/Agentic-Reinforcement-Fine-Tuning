@@ -13,14 +13,14 @@ from typing import List, Dict, Tuple
 from tqdm import tqdm
 from openai import AsyncOpenAI
 
-from src.settings import AZURE_ENDPOINT, AZURE_API_KEY, PLANNER_RESPONSES_DIR
+from src.settings import AZURE_ENDPOINT, AZURE_TOKEN_PROVIDER, PLANNER_RESPONSES_DIR
 from src.evaluation.content_filter import get_policy_header
 
 
 def get_async_client() -> AsyncOpenAI:
-    """Get an async OpenAI client configured for Azure."""
+    """Get an async OpenAI client configured for Azure (Entra ID auth)."""
     return AsyncOpenAI(
-        api_key=AZURE_API_KEY,
+        api_key=AZURE_TOKEN_PROVIDER(),
         base_url=f"{AZURE_ENDPOINT}/openai/v1/"
     )
 
@@ -107,7 +107,11 @@ async def generate_response_async(
         except Exception as e:
             text = ""
             usage = {"input_tokens": 0, "output_tokens": 0, "reasoning_tokens": 0, "latency_ms": 0}
-            print(f"Error sample {idx}: {e}")
+            if "content_filter" in str(e):
+                text = "__CONTENT_FILTER_SKIPPED__"
+                print(f"Skipped sample {idx} (content filter false positive, sample excluded from metrics)")
+            else:
+                print(f"Error sample {idx}: {e}")
 
     return {
         "response": text,

@@ -21,6 +21,7 @@ from .charts import (
     # Notebook 04
     plot_metrics_comparison,
     plot_cost_vs_performance,
+    plot_latency_analysis,
     # Notebook 05
     plot_react_distributions,
 )
@@ -40,6 +41,7 @@ __all__ = [
     # Charts — Notebook 04
     "plot_metrics_comparison",
     "plot_cost_vs_performance",
+    "plot_latency_analysis",
     # Charts — Notebook 05
     "plot_react_distributions",
 ]

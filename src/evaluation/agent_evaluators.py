@@ -22,7 +22,7 @@ from datetime import datetime
 
 from src.settings import (
     AZURE_ENDPOINT,
-    AZURE_API_KEY,
+    AZURE_TOKEN_PROVIDER,
     EVAL_DEPLOYMENT,  # gpt-4.1-mini (fast, non-reasoning)
     AZURE_API_VERSION,
     load_tool_definitions
@@ -45,7 +45,7 @@ def get_model_config() -> Dict[str, str]:
     """
     return {
         "azure_endpoint": AZURE_ENDPOINT,
-        "api_key": AZURE_API_KEY,
+        "api_key": AZURE_TOKEN_PROVIDER,
         "azure_deployment": EVAL_DEPLOYMENT,  # gpt-4.1-mini
         "api_version": AZURE_API_VERSION
     }

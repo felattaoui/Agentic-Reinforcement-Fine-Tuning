@@ -10,6 +10,7 @@ This module provides:
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 
 
 # =============================================================================
@@ -64,6 +65,11 @@ load_dotenv(ROOT_DIR / ".env")
 
 AZURE_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT")
 AZURE_API_KEY = os.getenv("AZURE_OPENAI_API_KEY")
+
+# Entra ID token provider (used when key-based auth is disabled)
+AZURE_TOKEN_PROVIDER = get_bearer_token_provider(
+    DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
+)
 AZURE_DEPLOYMENT = os.getenv("AZURE_OPENAI_DEPLOYMENT", "o4-mini")
 AZURE_DEPLOYMENT_DATA = os.getenv("AZURE_OPENAI_DEPLOYMENT_DATA", "gpt-5.1")
 AZURE_DEPLOYMENT_VANILLA = os.getenv("AZURE_OPENAI_DEPLOYMENT_VANILLA", "gpt-5.2")
